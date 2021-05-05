@@ -37,7 +37,6 @@ let next = 0;
 
 let r = "asda";
 
-console.log(obj.length);
 
 window.addEventListener("DOMContentLoaded", function () {
   creatSpan();
@@ -83,10 +82,11 @@ window.addEventListener("keydown", function (e) {
         warning.classList.remove("danger");
       }, 1500);
     }
+
     if (!Number(lives.textContent)) {
      WinOrLose(display,secondaryObj)
     }
-    console.log(arr.length);
+
     if (arr.length == display.length && mainObj !== undefined) {
       score++;
      WinOrLose(display,secondaryObj)
