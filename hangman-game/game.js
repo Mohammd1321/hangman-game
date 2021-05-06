@@ -4,8 +4,8 @@ const warning = document.querySelector(".alert");
 const lives = document.querySelector(".lives");
 const word = document.querySelector(".word");
 const question = document.querySelector(".question");
-const button = document.querySelectorAll('button');
-const block = document.getElementsByClassName('block');
+const button = document.querySelectorAll("button");
+const block = document.getElementsByClassName("block");
 let currentValue = "-";
 
 let gameEnd = false;
@@ -29,8 +29,6 @@ let obj = [
   },
 ];
 
-
-
 let arr = [];
 let pressed = [];
 
@@ -43,25 +41,17 @@ let r = "asda";
 window.addEventListener("DOMContentLoaded", function () {
   creatSpan();
   question.textContent = obj[0].questions;
- 
 });
 
-
-
-button.forEach(but => {
-  but.addEventListener('click',function() {
-    forPhonesAndDisktop(but.textContent,false);
-  })
+button.forEach((but) => {
+  but.addEventListener("click", function () {
+    forPhonesAndDisktop(but.textContent, false);
+  });
 });
-
 
 window.addEventListener("keydown", function (e) {
-  forPhonesAndDisktop(e.key,e.repeat);
+  forPhonesAndDisktop(e.key, e.repeat);
 });
-
-
-  
-
 
 function showText(text, classes) {
   warning.textContent = text;
@@ -79,16 +69,15 @@ function creatSpan() {
   }
 }
 
-
-function preventDuplicate(doc,key,value = false) {
-  if(value == false) {
+function preventDuplicate(doc, key, value = false) {
+  if (value == false) {
     if (!pressed.includes(key)) {
       doc.textContent = key;
       arr.push(key);
     }
     pressed.push(key);
   }
-  if(value) {
+  if (value) {
     if (!pressed.includes(key)) {
       doc.forEach((word) => {
         word.textContent = key;
@@ -99,7 +88,6 @@ function preventDuplicate(doc,key,value = false) {
   }
 }
 
-
 function nextQuestion(display) {
   display.forEach((_, index) => {
     document.querySelector(`.${obj[next].answer[index]}`).remove();
@@ -109,7 +97,6 @@ function nextQuestion(display) {
   creatSpan();
   lives.textContent = 10;
 }
-
 
 function WinOrLose(...rest) {
   if (rest[1] == undefined) {
@@ -124,9 +111,7 @@ function WinOrLose(...rest) {
   }
 }
 
-
-
-function forPhonesAndDisktop(device,repeat) {
+function forPhonesAndDisktop(device, repeat) {
   if (!gameEnd) {
     const word2 = [...button].map((item) => item.innerHTML);
     const display = document.querySelectorAll(".display");
@@ -134,25 +119,25 @@ function forPhonesAndDisktop(device,repeat) {
     const secondaryObj = obj[next + 1];
     button.forEach((item) => {
       if (!repeat) {
-
         if (device == item.innerHTML) {
-
           display.forEach((item, index) => {
             item.classList.add(mainObj.answer[index]);
           });
 
           const check = document.querySelector(`.${device}`);
 
-          const check2 =  document.querySelectorAll(`.${device}`);
+          const check2 = document.querySelectorAll(`.${device}`);
 
           if (check == null) {
             lives.textContent = Number(lives.textContent) - 1;
           } else {
-
-            if (mainObj.answer.indexOf(device) == mainObj.answer.lastIndexOf(device)) {
-              preventDuplicate(check,device)
+            if (
+              mainObj.answer.indexOf(device) ==
+              mainObj.answer.lastIndexOf(device)
+            ) {
+              preventDuplicate(check, device);
             } else {
-              preventDuplicate(check2,device,true);
+              preventDuplicate(check2, device, true);
             }
           }
         }
@@ -168,12 +153,12 @@ function forPhonesAndDisktop(device,repeat) {
     }
 
     if (!Number(lives.textContent)) {
-     WinOrLose(display,secondaryObj)
+      WinOrLose(display, secondaryObj);
     }
 
     if (arr.length == display.length && mainObj !== undefined) {
       score++;
-     WinOrLose(display,secondaryObj)
+      WinOrLose(display, secondaryObj);
       arr = [];
       pressed = [];
     }
