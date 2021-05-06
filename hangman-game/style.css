@@ -32,7 +32,7 @@ h3 {
 }
 
 .alphabet {
-  text-align: left;
+  text-align: center;
   margin: 1.5rem;
 }
 
@@ -44,7 +44,7 @@ button {
 }
 
 .display {
-  font-size: 5rem;
+  font-size: clamp(1.5rem,10vw,5rem);
   margin: 0rem .5rem;
 }
 
@@ -68,8 +68,13 @@ button {
 
 @media (max-width: 400px) {
   .alphabet {
-    text-align:inherit;
+    margin: 1.5rem 0rem;
+  }
+  button {
+    padding: .3rem;
+    width: 40px;
+  }
+  .display {
+    margin: 0rem .3rem;
   }
 }
-
-

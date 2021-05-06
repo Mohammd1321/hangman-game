@@ -1,10 +1,11 @@
 "use strict";
 
-const alphabetWords = document.querySelectorAll("button");
 const warning = document.querySelector(".alert");
 const lives = document.querySelector(".lives");
 const word = document.querySelector(".word");
 const question = document.querySelector(".question");
+const button = document.querySelectorAll('button');
+const block = document.getElementsByClassName('block');
 let currentValue = "-";
 
 let gameEnd = false;
@@ -28,6 +29,8 @@ let obj = [
   },
 ];
 
+
+
 let arr = [];
 let pressed = [];
 
@@ -37,64 +40,28 @@ let next = 0;
 
 let r = "asda";
 
-
 window.addEventListener("DOMContentLoaded", function () {
   creatSpan();
   question.textContent = obj[0].questions;
+ 
 });
+
+
+
+button.forEach(but => {
+  but.addEventListener('click',function() {
+    forPhonesAndDisktop(but.textContent,false);
+  })
+});
+
 
 window.addEventListener("keydown", function (e) {
-  if (!gameEnd) {
-    const word = [...alphabetWords].map((item) => item.innerHTML);
-    const display = document.querySelectorAll(".display");
-    const mainObj = obj[next];
-    const secondaryObj = obj[next + 1];
-    alphabetWords.forEach((item) => {
-      if (!e.repeat) {
-
-        if (e.key == item.innerHTML) {
-
-          display.forEach((item, index) => {
-            item.classList.add(mainObj.answer[index]);
-          });
-
-          const check = document.querySelector(`.${e.key}`);
-
-          const check2 =  document.querySelectorAll(`.${e.key}`);
-
-          if (check == null) {
-            lives.textContent = Number(lives.textContent) - 1;
-          } else {
-
-            if (mainObj.answer.indexOf(e.key) == mainObj.answer.lastIndexOf(e.key)) {
-              preventDuplicate(check,e.key)
-            } else {
-              preventDuplicate(check2,e.key,true);
-            }
-          }
-        }
-      }
-    });
-    if (!word.includes(e.key)) {
-      showText("you must enter one of the words above", "danger");
-      setTimeout(() => {
-        warning.textContent = "";
-        warning.classList.remove("danger");
-      }, 1500);
-    }
-
-    if (!Number(lives.textContent)) {
-     WinOrLose(display,secondaryObj)
-    }
-
-    if (arr.length == display.length && mainObj !== undefined) {
-      score++;
-     WinOrLose(display,secondaryObj)
-      arr = [];
-      pressed = [];
-    }
-  }
+  forPhonesAndDisktop(e.key,e.repeat);
 });
+
+
+  
+
 
 function showText(text, classes) {
   warning.textContent = text;
@@ -154,5 +121,61 @@ function WinOrLose(...rest) {
     }
   } else {
     nextQuestion(rest[0]);
+  }
+}
+
+
+
+function forPhonesAndDisktop(device,repeat) {
+  if (!gameEnd) {
+    const word2 = [...button].map((item) => item.innerHTML);
+    const display = document.querySelectorAll(".display");
+    const mainObj = obj[next];
+    const secondaryObj = obj[next + 1];
+    button.forEach((item) => {
+      if (!repeat) {
+
+        if (device == item.innerHTML) {
+
+          display.forEach((item, index) => {
+            item.classList.add(mainObj.answer[index]);
+          });
+
+          const check = document.querySelector(`.${device}`);
+
+          const check2 =  document.querySelectorAll(`.${device}`);
+
+          if (check == null) {
+            lives.textContent = Number(lives.textContent) - 1;
+          } else {
+
+            if (mainObj.answer.indexOf(device) == mainObj.answer.lastIndexOf(device)) {
+              preventDuplicate(check,device)
+            } else {
+              preventDuplicate(check2,device,true);
+            }
+          }
+        }
+      }
+    });
+
+    if (!word2.includes(device)) {
+      showText("you must enter one of the words above", "danger");
+      setTimeout(() => {
+        warning.textContent = "";
+        warning.classList.remove("danger");
+      }, 1500);
+    }
+
+    if (!Number(lives.textContent)) {
+     WinOrLose(display,secondaryObj)
+    }
+
+    if (arr.length == display.length && mainObj !== undefined) {
+      score++;
+     WinOrLose(display,secondaryObj)
+      arr = [];
+      pressed = [];
+    }
   }
 }
